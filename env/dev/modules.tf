@@ -1,5 +1,5 @@
 module "iam" {
-  source = "modules/iam"
+  source = "../../modules/iam"
 
   env = var.env
   service_accounts = {
