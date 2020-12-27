@@ -4,7 +4,7 @@
 # to the master branch, `terraform apply` will be executed.
 #
 # Documentation for `hashicorp/setup-terraform` is located here: https://github.com/hashicorp/setup-terraform
-name: 'Terraform'
+name: 'Terraform Deployment'
 
 on:
   workflow_dispatch:
@@ -13,9 +13,6 @@ on:
         description: 'Target environment deployment'
         required: true
         default: 'dev'
-
-env:
-  branche: ""
 
 jobs:
   terraform:
@@ -28,6 +25,10 @@ jobs:
         shell: bash
 
     steps:
+    - name: Check inputs
+      if: github.event.inputs.target == 'dev'
+      run: echo "Your input '${{ github.event.inputs.target }}' is valid !"
+
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2

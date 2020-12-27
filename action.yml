@@ -1,7 +1,0 @@
-name: 'GitHub Action - Timeline-IAAS'
-description: 'GitHub Action\'s inputs'
-inputs:
-  target:
-    description: 'Target environment deployment'
-    required: true
-    default: 'dev'
