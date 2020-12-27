@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 0.13"
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = ">= 3.51.0"
     }
   }
@@ -27,5 +27,5 @@ provider "google" {
 }
 
 resource "google_compute_network" "vpc_network" {
-  name    = "terraform-network"
+  name = "terraform-network"
 }
