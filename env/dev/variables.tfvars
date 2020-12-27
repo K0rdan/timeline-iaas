@@ -1,9 +1,9 @@
-variable region {
+variable "region" {
   type    = string
   default = "europe-west1"
 }
 
-variable zone {
+variable "zone" {
   type    = string
   default = "europe-west1-c"
 }
