@@ -19,7 +19,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("./secrets/timeline-dev-280507-eea2c31b6ec3.json")
+  #credentials = file("./secrets/timeline-dev-280507-eea2c31b6ec3.json")
 
   project = local.project
   region  = var.region
