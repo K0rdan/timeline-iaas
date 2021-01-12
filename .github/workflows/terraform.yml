@@ -52,6 +52,9 @@ jobs:
     - name: Verify Exported
       shell: bash
       run: test -f $GOOGLE_APPLICATION_CREDENTIALS
+
+    - name: Terraform Cloud Export variables
+      run: terraform export --help
     # TEMP
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
@@ -64,8 +67,6 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $GOOGLE_APPLICATION_CREDENTIALS 
       run: terraform plan env/${{ github.event.inputs.target }}
 
       # On push to master, build or change infrastructure according to Terraform configuration files
