@@ -48,6 +48,12 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
 
+    # TEMP
+    - name: Verify Exported
+      shell: bash
+      run: test -f $GOOGLE_APPLICATION_CREDENTIALS
+    # TEMP
+
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init -reconfigure env/${{ github.event.inputs.target }}
