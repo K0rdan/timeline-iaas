@@ -17,10 +17,7 @@ terraform {
     }
   }
 }
-
 provider "google" {
-  credentials = GOOGLE_APPLICATION_CREDENTIALS
-
   project = local.project
   region  = var.region
   zone    = var.zone
