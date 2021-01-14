@@ -50,23 +50,7 @@ jobs:
 
     # TEMP
     - name: TEST CURL
-      env:
-        TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
-        TF_CLOUD_API_TOKEN: ${{ secrets.TF_CLOUD_API_TOKEN }}
-      run: |
-        curl -X POST 'https://app.terraform.io/api/v2/workspaces/$TF_WORKSPACE/vars' --header 'Content-Type: application/vnd.api+json' --header 'Authorization: Bearer $TF_CLOUD_API_TOKEN' --data-raw '{
-          "data": {
-            "type":"vars",
-            "attributes": {
-              "key":"GOOGLE_CREDENTIALS",
-              "value":"{ \"key\": \"value\" }",
-              "description":"GCP credential associated to a specific project",
-              "category":"env",
-              "hcl":false,
-              "sensitive":false
-            }
-          }
-        }'
+      run: curl -X POST 'https://app.terraform.io/api/v2/workspaces/${{ secrets.TF_WORKSPACE }}/vars' --header 'Content-Type: application/vnd.api+json' --header 'Authorization: Bearer ${{ TF_API_TOKEN }}' --data-raw '{"data":{"type":"vars","attributes":{"key":"GOOGLE_CREDENTIALS","value":"{ \"key\": \"value\" }","description":"GCP credential associated to a specific project","category":"env","hcl":false,"sensitive":false}}}'
     # TEMP
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
