@@ -53,7 +53,7 @@ jobs:
       uses: satak/webrequest-action@master
       with:
         method: POST
-        url: https://app.terraform.io/api/v2/workspaces/${{ secrets.TF_WORKSPACE }}/vars
+        url: 'https://app.terraform.io/api/v2/workspaces/${{ secrets.TF_WORKSPACE }}/vars'
         headers: '{"Content-Type": "application/vnd.api+json", "Authorization": "Bearer ${{ secrets.TF_API_TOKEN }}"}'
         payload: '{"data":{"type":"vars","attributes":{"key":"GOOGLE_CREDENTIALS","value":"TEST","description":"GCP credential associated to a specific project","category":"env","hcl":false,"sensitive": false}}}'
       #run: |
