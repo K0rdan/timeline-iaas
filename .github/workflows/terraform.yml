@@ -52,9 +52,9 @@ jobs:
     - name: TEST CURL
       env:
         TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
-        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+        TF_CLOUD_API_TOKEN: ${{ secrets.TF_CLOUD_API_TOKEN }}
       run: |
-        curl -X POST 'https://app.terraform.io/api/v2/workspaces/$TF_WORKSPACE/vars' --header 'Content-Type: application/vnd.api+json' --header 'Authorization: Bearer $TF_API_TOKEN' --data-raw '{
+        curl -X POST 'https://app.terraform.io/api/v2/workspaces/$TF_WORKSPACE/vars' --header 'Content-Type: application/vnd.api+json' --header 'Authorization: Bearer $TF_CLOUD_API_TOKEN' --data-raw '{
           "data": {
             "type":"vars",
             "attributes": {
