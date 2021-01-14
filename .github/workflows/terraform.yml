@@ -50,6 +50,8 @@ jobs:
 
     # TEMP
     - name: TEST CURL
+      env:
+        TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
       run: |
         curl -X POST 'https://app.terraform.io/api/v2/workspaces/$TF_WORKSPACE/vars' --header 'Content-Type: application/vnd.api+json' --header 'Authorization: Bearer $TF_API_TOKEN' --data-raw '{
           "data": {
