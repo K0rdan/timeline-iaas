@@ -50,8 +50,14 @@ jobs:
 
     # TEMP
     - name: TEST CURL
-      run: |
-        curl -X POST 'https://app.terraform.io/api/v2/workspaces/${{ secrets.TF_WORKSPACE }}/vars' --header 'Content-Type: application/vnd.api+json' --header 'Authorization: Bearer ${{ secrets.TF_API_TOKEN }}' --data-raw '{{"data":{{"type":"vars","attributes":{{"key":"GOOGLE_CREDENTIALS","value":"TEST","description":"GCP credential associated to a specific project","category":"env","hcl":false,"sensitive": false}}}}}}'
+      uses: satak/webrequest-action@master
+      with:
+        method: POST
+        url: https://app.terraform.io/api/v2/workspaces/${{ secrets.TF_WORKSPACE }}/vars
+        headers: '{"Content-Type": "application/vnd.api+json", "Authorization": "Bearer ${{ secrets.TF_API_TOKEN }}"}'
+        payload: '{"data":{"type":"vars","attributes":{"key":"GOOGLE_CREDENTIALS","value":"TEST","description":"GCP credential associated to a specific project","category":"env","hcl":false,"sensitive": false}}}'
+      #run: |
+        #curl -X POST 'https://app.terraform.io/api/v2/workspaces/${{ secrets.TF_WORKSPACE }}/vars' --header 'Content-Type: application/vnd.api+json' --header 'Authorization: Bearer ${{ secrets.TF_API_TOKEN }}' --data-raw '{{"data":{{"type":"vars","attributes":{{"key":"GOOGLE_CREDENTIALS","value":"TEST","description":"GCP credential associated to a specific project","category":"env","hcl":false,"sensitive": false}}}}}}'
     # TEMP
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
