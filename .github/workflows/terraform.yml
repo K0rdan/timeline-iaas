@@ -50,7 +50,7 @@ jobs:
 
     # TEST
     - name: Setup Terraform Cloud environment
-      uses: docker://k0rdan/setup-terraform-cloud:1.0.0-20210121-8-e73b4e47ec132189df54946f141c49c1ebbfe6f9
+      uses: docker://k0rdan/setup-terraform-cloud:1.0.0-20210121-9-9fbe01e06d1e99abbcfed3611a8fa40e3966d2a5
       with:
         TFC_WORKSPACE: ${{ secrets.TFC_WORKSPACE }}
         TFC_API_TOKEN: ${{ secrets.TFC_API_TOKEN }}
