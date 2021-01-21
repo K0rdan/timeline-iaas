@@ -28,46 +28,51 @@ jobs:
 
     steps:
     - name: Check inputs
-      if: github.event.inputs.target == 'dev'
-      run: echo "Your input '${{ github.event.inputs.target }}' is valid !"
+      run: |
+        if [[ "${{ github.event.inputs.target }}" == "dev" ]]; then
+          echo "Your input '${{ github.event.inputs.target }}' is valid !"
+        else 
+          echo "Your input '${{ github.event.inputs.target }}' is invalid !"
+        fi
 
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
+      if: github.event.inputs.target == 'dev'
       uses: actions/checkout@v2
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
+      if: github.event.inputs.target == 'dev'
       uses: hashicorp/setup-terraform@v1
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        terraform_wrapper: false
+        cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
-    - name: Setup GCloud
-      uses: google-github-actions/setup-gcloud@master
+    # TEST
+    - name: Setup Terraform Cloud environment
+      uses: docker://k0rdan/setup-terraform-cloud:1.0.0-20210121-7-e8895cdde8cb8ed6d56c5b760ce975ee83a8a18f
       with:
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
-
-    # TEMP
-    - name: TEST CURL
-      run: |
-        curl -X POST 'https://app.terraform.io/api/v2/workspaces/${{ secrets.TF_WORKSPACE }}/vars' --header 'Content-Type:\ application/vnd.api+json' --header 'Authorization:\ Bearer ${{ secrets.TF_API_TOKEN }}' --data-raw '{"data":{"type":"vars","attributes":{"key":"GOOGLE_CREDENTIALS","value":"TEST","description":"GCP credential associated to a specific project","category":"env","hcl":false,"sensitive": false}}}' -v
-    # TEMP
+        TFC_WORKSPACE: ${{ secrets.TFC_WORKSPACE }}
+        TFC_API_TOKEN: ${{ secrets.TFC_API_TOKEN }}
+    # TEST
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
+      if: github.event.inputs.target == 'dev'
       run: terraform init -reconfigure env/${{ github.event.inputs.target }}
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
+      if: github.event.inputs.target == 'dev'
       run: terraform fmt -check env/${{ github.event.inputs.target }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
+      if: github.event.inputs.target == 'dev'
       run: terraform plan env/${{ github.event.inputs.target }}
 
       # On push to master, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      if: github.event.inputs.target == 'dev' && github.ref == 'refs/heads/master' && github.event_name == 'push'
       run: terraform apply -auto-approve
