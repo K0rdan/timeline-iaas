@@ -18,6 +18,8 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.target }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
