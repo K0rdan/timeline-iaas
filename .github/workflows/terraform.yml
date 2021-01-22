@@ -21,8 +21,6 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.event.inputs.target }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -51,14 +49,12 @@ jobs:
         terraform_wrapper: false
         cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
-    # TEST
     - name: Setup Terraform Cloud environment
       uses: docker://k0rdan/setup-terraform-cloud:1.0.0-20210121-10-8068c38497dc9186f7e0dcb9d55d30c871bb89ad
       with:
         TFC_WORKSPACE: ${{ secrets.TFC_WORKSPACE }}
         TFC_API_TOKEN: ${{ secrets.TFC_API_TOKEN }}
         GCP_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-    # TEST
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
