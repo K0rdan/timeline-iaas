@@ -7,9 +7,6 @@
 name: 'Terraform Deployment'
 
 on:
-  push:
-    branches:
-      - 'master'
   workflow_dispatch:
     inputs:
       target:
@@ -50,6 +47,7 @@ jobs:
         cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
     - name: Setup Terraform Cloud environment
+      if: github.event.inputs.target == 'dev'
       uses: docker://k0rdan/setup-terraform-cloud:1.0.0-20210121-10-8068c38497dc9186f7e0dcb9d55d30c871bb89ad
       with:
         TFC_WORKSPACE: ${{ secrets.TFC_WORKSPACE }}
@@ -74,5 +72,5 @@ jobs:
       # On push to master, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      if: github.event.inputs.target == 'dev' && github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+      if: github.event.inputs.target == 'dev' && github.ref == 'refs/heads/master'
       run: terraform apply -auto-approve
