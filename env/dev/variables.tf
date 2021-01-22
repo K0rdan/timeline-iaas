@@ -1,20 +1,20 @@
-variable region {
-  type = string
+variable "region" {
+  type    = string
   default = "europe-west1"
 }
 
-variable zone {
-  type = string
+variable "zone" {
+  type    = string
   default = "europe-west1-c"
 }
 
 variable "env" {
-  type = string
+  type    = string
   default = "dev"
 }
 
 variable "namespace" {
-  type = string
+  type    = string
   default = "timeline"
 }
 
