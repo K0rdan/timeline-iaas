@@ -9,12 +9,17 @@ You need to have in your path:
 - [gcloud](https://cloud.google.com/sdk/install?hl=fr) (>=299.0.0)
 - [terraform](https://www.terraform.io/downloads.html) (>= 0.12)
 
-
-
 ```sh
 $ terraform init -reconfigure env/$ENV
 $ terraform plan env/$ENV
 $ terraform apply env/$ENV
+```
+
+Or :
+- [act] (https://github.com/nektos/act) (>=0.2.18)
+
+```sh
+act -P ubuntu-latest=node:12.6 -e ./.act/inputs.json --secret-file ./.act/.secrets  -j terraform -v
 ```
 
 ### Github Setup
