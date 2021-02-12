@@ -22,6 +22,7 @@ variable "service_accounts" {
 
 variable "env" {
   type = string
+  default = "dev"
 }
 
 /* LOCALS */
