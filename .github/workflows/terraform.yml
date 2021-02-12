@@ -83,4 +83,4 @@ jobs:
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
       run: |
-        terraform apply -input=false env/${{ github.event.inputs.target }}
+        terraform apply -auto-approve env/${{ github.event.inputs.target }}
