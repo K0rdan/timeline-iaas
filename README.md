@@ -16,15 +16,35 @@ $ terraform apply env/$ENV
 ```
 
 Or :
+
 - [act] (https://github.com/nektos/act) (>=0.2.18)
 
 ```sh
 act -P ubuntu-latest=node:12.6 -e ./.act/inputs.json --secret-file ./.act/.secrets  -j terraform -v
 ```
 
+You can use the flags :
+
+- `--insecure-secrets` to see in full text the value of the secrets in your local pipeline.
+- `-v` to have the maximum verbosity of logs in your pipeline.
+
+#### ACT's Secrets
+
+Here's the template of secrets you have to use :
+
+```env
+TFC_WORKSPACE=
+TFC_API_TOKEN=
+GOOGLE_PROJECT_ID=
+GOOGLE_CREDENTIALS=
+MONGODB_ATLAS_PUBLIC_KEY=
+MONGODB_ATLAS_PRIVATE_KEY=
+```
+
 ### Github Setup
+
 In your repository settings you'll to create the following environment (case **in**sensitive) :
-| Environment   | Trigram       |
+| Environment | Trigram |
 | ------------- | ------------- |
 | Development | DEV |
 
@@ -39,9 +59,9 @@ Each environment must have the following environment secrets :
 Some modules need API to be activate on GCP :
 
 - [Cloud Build]()
-- [Compute Engine]()
-- [Identity and Access Management (IAM)](https://console.developers.google.com/apis/api/iam.googleapis.com/overview?project=1057790429303) :
-- [Cloud Resource Manager (CRM)](https://console.developers.google.com/apis/api/cloudresourcemanager.googleapis.com/overview?project=1057790429303)
+- [Compute Engine](https://console.developers.google.com/apis/library/compute.googleapis.com)
+- [Identity and Access Management (IAM)](https://console.developers.google.com/apis/api/iam.googleapis.com/overview) :
+- [Cloud Resource Manager (CRM)](https://console.developers.google.com/apis/api/cloudresourcemanager.googleapis.com/overview)
 
 You can enable these API with the following commands :
 

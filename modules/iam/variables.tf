@@ -1,27 +1,27 @@
-variable region {
-  type = string
+variable "region" {
+  type    = string
   default = "europe-west1"
 }
 
-variable zone {
-  type = string
+variable "zone" {
+  type    = string
   default = "europe-west1-c"
 }
 
 variable "namespace" {
-  type = string
+  type    = string
   default = "timeline"
 }
 
 variable "service_accounts" {
   type = map(any)
   default = {
-    github = ["roles/storage.admin"]
+    github    = ["roles/storage.admin"]
   }
 }
 
 variable "env" {
-  type = string
+  type    = string
   default = "dev"
 }
 
@@ -32,7 +32,7 @@ locals {
   account_role_pairs = flatten([
     for account, roles in var.service_accounts : [
       for role in roles : {
-        role = role,
+        role    = role,
         account = account,
       }
     ]

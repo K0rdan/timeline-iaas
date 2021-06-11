@@ -7,7 +7,12 @@ terraform {
     }
     google = {
       source  = "hashicorp/google"
-      version = ">= 3.51.0"
+      version = ">= 3.71.0"
+    }
+
+    mongodbatlas = {
+      source  = "mongodb/mongodbatlas"
+      version = "0.9.0"
     }
   }
 
@@ -29,4 +34,9 @@ provider "google" {
 }
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
+}
+
+provider "mongodbatlas" {
+  public_key  = ""
+  private_key = ""
 }
