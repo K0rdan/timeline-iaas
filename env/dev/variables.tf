@@ -15,11 +15,10 @@ variable "env" {
 
 variable "namespace" {
   type    = string
-  default = "timeline"
+  default = "luos"
 }
 
 /* LOCALS */
-
 locals {
-  project = "timeline-dev-280507"
+  project = "luos-340109"
 }

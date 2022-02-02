@@ -10,7 +10,7 @@ variable "zone" {
 
 variable "namespace" {
   type    = string
-  default = "timeline"
+  default = "luos"
 }
 
 variable "service_accounts" {

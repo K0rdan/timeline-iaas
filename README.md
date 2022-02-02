@@ -1,4 +1,4 @@
-# Timeline IAAS
+# Luos IAAS
 
 ## Getting Started
 
@@ -6,13 +6,13 @@
 
 You need to have in your path:
 
-- [gcloud](https://cloud.google.com/sdk/install?hl=fr) (>=299.0.0)
-- [terraform](https://www.terraform.io/downloads.html) (>= 0.12)
+- [gcloud](https://cloud.google.com/sdk/install?hl=fr) (>=370.0.0)
+- [terraform](https://www.terraform.io/downloads.html) (>= 1.1.4)
 
 ```sh
-$ terraform init -reconfigure env/$ENV
-$ terraform plan env/$ENV
-$ terraform apply env/$ENV
+$ terraform -chdir=env/$ENV init -reconfigure
+$ terraform -chdir=env/$ENV plan
+$ terraform -chdir=env/$ENV apply
 ```
 
 Or :
@@ -20,7 +20,7 @@ Or :
 - [act] (https://github.com/nektos/act) (>=0.2.18)
 
 ```sh
-act -P ubuntu-latest=node:12.6 -e ./.act/inputs.json --secret-file ./.act/.secrets  -j terraform -v
+act -P ubuntu-latest=node:12.6 -e ./.act/inputs.json --secret-file ./.act/.secrets -j terraform
 ```
 
 You can use the flags :
@@ -49,7 +49,7 @@ In your repository settings you'll to create the following environment (case **i
 | Development | DEV |
 
 Each environment must have the following environment secrets :
-| Variable | Usage |
+| Variable | Usage |
 | -------- | ----- |
 | GCP_PROJECT_ID | Used to `Setup GCloud` |
 | GCP_SA_KEY | Used to `Setup GCloud` |

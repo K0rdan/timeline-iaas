@@ -10,3 +10,11 @@ module "iam" {
     ],
   }
 }
+
+module "mongodb" {
+  source         = "../../modules/mongodb"
+  region         = var.region
+  env            = var.env
+  network        = resource.google_compute_network.vpc_network.id
+  gcp_project_id = local.project
+}

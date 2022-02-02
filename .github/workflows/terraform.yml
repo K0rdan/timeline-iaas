@@ -60,11 +60,27 @@ jobs:
         run: |
           terraform -chdir=env/${{ github.event.inputs.target }} fmt -check
 
+      - name: Get Mongo Atlas network container ID
+        if: github.event.inputs.target == 'dev'
+        run: |
+          echo "MONGODB_ATLAS_CONTAINER_ID=$(curl --user "${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}:${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}" --digest --header "Accept: application/json" --request GET "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.MONGODB_ATLAS_PROJECT_ID }}/containers/all?pretty=true" | python -c "import sys, json; print json.load(sys.stdin)['results'][0]['id']")" >> $GITHUB_ENV
+
+      # Import existing peering container from MongoDB Atlas into Terraform
+      # - name: Terraform Import container ID
+      #   if: github.event.inputs.target == 'dev'
+      #   env:
+      #     GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      #     MONGODB_ATLAS_PROJECT_ID: ${{ secrets.MONGODB_ATLAS_PROJECT_ID }}
+      #     MONGODB_ATLAS_PUBLIC_KEY: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
+      #     MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
+      #   run: |
+      #     terraform -chdir=env/${{ github.event.inputs.target }} import module.mongodb.${{ env.MONGODB_ATLAS_CONTAINER_ID }}
       # Generates an execution plan for Terraform
       - name: Terraform Plan
         if: github.event.inputs.target == 'dev'
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          MONGODB_ATLAS_PROJECT_ID: ${{ secrets.MONGODB_ATLAS_PROJECT_ID }}
           MONGODB_ATLAS_PUBLIC_KEY: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
           MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
         run: |
@@ -76,6 +92,7 @@ jobs:
         if: github.event.inputs.target == 'dev' && github.ref == 'refs/heads/master'
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          MONGODB_ATLAS_PROJECT_ID: ${{ secrets.MONGODB_ATLAS_PROJECT_ID }}
           MONGODB_ATLAS_PUBLIC_KEY: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
           MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
         run: |

@@ -1,28 +1,24 @@
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1.1"
   required_providers {
     tfe = {
       source  = "hashicorp/tfe"
-      version = "~> 0.24.0"
+      version = "~> 0.28.0"
     }
     google = {
       source  = "hashicorp/google"
-      version = ">= 3.71.0"
-    }
-
-    mongodbatlas = {
-      source  = "mongodb/mongodbatlas"
-      version = "0.9.0"
+      version = ">= 4.9.0"
     }
   }
 
   backend "remote" {
+    hostname = "app.luos.io"
     # The name of your Terraform Cloud organization.
-    organization = "Timeline"
+    organization = "luos.io"
 
     # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
-      name = "timeline-iaas"
+      prefix = "luos-"
     }
   }
 }
@@ -33,10 +29,5 @@ provider "google" {
   zone    = var.zone
 }
 resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
-}
-
-provider "mongodbatlas" {
-  public_key  = ""
-  private_key = ""
+  name = "luos-${var.env}-network"
 }
